@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Administrador de Proyectos</title>
+  <link rel="stylesheet" href="/css/actividades.css">
+</head>
+<body>
+
+  <h1>Panel de Administración</h1>
+
+  <div class="form-container">
+    <h2>Subir Proyecto</h2>
+    <input type="text" id="projectName" placeholder="Nombre del proyecto">
+    <textarea id="projectDesc" placeholder="Descripción del proyecto"></textarea>
+    
+    <input type="file" id="projectFile">
+    <div id="fileNameDisplay" class="file-name"></div>
+
+    <button onclick="addProject()">Subir Proyecto</button>
+  </div>
+
+  <div class="project-list" id="projectList">
+    <h2>Proyectos Subidos</h2>
+  </div>
+
+<script>
+  let projects = [];
+
+  const fileInput = document.getElementById('projectFile');
+  const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+  fileInput.addEventListener('change', () => {
+  const file = fileInput.files[0];
+  if (file) {
+    fileNameDisplay.textContent = `Archivo seleccionado: ${file.name}`;
+  } else {
+    fileNameDisplay.textContent = '';
+  }
+});
+
+
+  // Cargar desde localStorage al iniciar
+  window.addEventListener('load', () => {
+    const stored = localStorage.getItem('projects');
+    if (stored) {
+      projects = JSON.parse(stored);
+      renderProjects();
+    }
+  });
+
+  function renderProjects() {
+    const container = document.getElementById('projectList');
+    container.innerHTML = '<h2>Proyectos Subidos</h2>';
+    projects.forEach((project, index) => {
+      container.innerHTML += `
+        <div class="project" style="margin-bottom: 30px; padding: 15px; border: 1px solid #ccc; border-radius: 10px;">
+          <strong>${project.name}</strong>
+          <p>${project.desc}</p>
+
+          ${project.fileName ? `
+            <p class="file-name">Archivo: ${project.fileName}</p>
+            <a href="${project.fileContent}" target="_blank" style="color: #007BFF; text-decoration: underline; margin-right: 15px;">📄 Ver documento PDF</a>
+            <a href="${project.fileContent}" download="${project.fileName}" style="color: green; text-decoration: underline;">⬇ Descargar PDF</a>
+          ` : ''}
+
+          <div class="actions" style="margin-top: 10px;">
+            <button onclick="editProject(${index})">Editar</button>
+            <button onclick="deleteProject(${index})">Eliminar</button>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function addProject() {
+    const name = document.getElementById('projectName').value.trim();
+    const desc = document.getElementById('projectDesc').value.trim();
+    const file = fileInput.files[0];
+
+    if (!name || !desc) {
+      alert('Completa todos los campos requeridos');
+      return;
+    }
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const fileContent = e.target.result;
+
+        projects.push({
+          name,
+          desc,
+          fileName: file.name,
+          fileContent: fileContent
+        });
+
+        saveProjects();
+        resetForm();
+        renderProjects();
+      };
+      reader.readAsDataURL(file); // PDF como base64
+    } else {
+      projects.push({
+        name,
+        desc,
+        fileName: null,
+        fileContent: null
+      });
+
+      saveProjects();
+      resetForm();
+      renderProjects();
+    }
+  }
+
+  function deleteProject(index) {
+    if (confirm('¿Estás seguro de eliminar este proyecto?')) {
+      projects.splice(index, 1);
+      saveProjects();
+      renderProjects();
+    }
+  }
+
+  function editProject(index) {
+    const newName = prompt('Nuevo nombre del proyecto:', projects[index].name);
+    const newDesc = prompt('Nueva descripción:', projects[index].desc);
+    if (newName && newDesc) {
+      projects[index].name = newName;
+      projects[index].desc = newDesc;
+      saveProjects();
+      renderProjects();
+    }
+  }
+
+  function saveProjects() {
+    localStorage.setItem('projects', JSON.stringify(projects));
+  }
+
+  function resetForm() {
+    document.getElementById('projectName').value = '';
+    document.getElementById('projectDesc').value = '';
+    fileInput.value = '';
+    fileNameDisplay.textContent = '';
+  }
+</script>
+
+</body>
+</html>

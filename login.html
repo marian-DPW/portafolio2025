@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar Sesión</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="login-container">
+    <h2>Acceso al Administrador</h2>
+    <form id="loginForm">
+      <input type="text" id="usuario" placeholder="Usuario" required>
+      <input type="password" id="clave" placeholder="Contraseña" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <p id="mensaje" style="color: #1abc9c; margin-top: 10px;"></p>
+  </div>
+    <div class="login-container">
+
+    <h2>Iniciar Sesión</h2>
+    <form id="loginForm">
+      <input type="text" placeholder="Usuario" required>
+      <input type="password" placeholder="Contraseña" required>
+      <button type="submit">Ingresar</button>
+    </form>
+  </div>
+  <script src="../js/login.js"></script> 
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const usuario = document.getElementById("usuario").value;
+      const clave = document.getElementById("clave").value;
+      const mensaje = document.getElementById("mensaje");
+
+      if (usuario === "mari" && clave === "12345") {
+        // Redirigir al panel del administrador
+        window.location.href = "admin.html";
+      }
+        if (usuario === "marit" && clave === "12345") {
+        // Redirigir al panel de seccion 
+        window.location.href = "section.html";
+      } else {
+        // Mostrar mensaje de error
+        mensaje.textContent = "Usuario o contraseña incorrectos.";
+      }
+    });
+  </script>
+</body>
+</html>
