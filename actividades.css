@@ -1,0 +1,140 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f0f2f5;
+  color: #333;
+  padding: 20px;
+}
+
+/* Título principal */
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+/* Contenedor del formulario */
+.form-container {
+  background-color: #fff;
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.form-container h2 {
+  margin-bottom: 20px;
+  color: #34495e;
+}
+
+/* Inputs y textarea */
+input[type="text"],
+textarea,
+input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+/* Botón principal */
+button {
+  background-color: #007BFF;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Nombre de archivo */
+.file-name {
+  margin-top: 5px;
+  font-size: 14px;
+  font-style: italic;
+  color: #666;
+}
+
+/* Lista de proyectos */
+.project-list {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.project-list h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+/* Tarjeta de cada proyecto */
+.project {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.project strong {
+  font-size: 18px;
+  color: #333;
+}
+
+.project p {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+/* Acciones: editar / eliminar */
+.actions {
+  margin-top: 10px;
+}
+
+.actions button {
+  margin-right: 10px;
+  background-color: #e67e22;
+}
+
+.actions button:last-child {
+  background-color: #c0392b;
+}
+
+.actions button:hover {
+  filter: brightness(1.1);
+}
+
+/* Enlaces PDF */
+a {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-container, .project-list {
+    padding: 15px;
+  }
+
+  input[type="text"],
+  textarea,
+  input[type="file"],
+  button {
+    font-size: 14px;
+  }
+}
